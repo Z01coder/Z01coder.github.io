@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aurora a Freefolio template by OSSPH</title>
+    <meta name="description" content="A modern dark portfolio template inspired by the Northern Lights with comprehensive sections and smooth animations">
+    <meta property="og:title" content="Aurora Portfolio Template">
+    <meta property="og:description" content="A Northern Lights inspired portfolio template with dark mode aesthetic">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'aurora-green': '#00ffaa',
+                        'aurora-blue': '#00aaff',
+                        'aurora-purple': '#aa00ff',
+                        'aurora-pink': '#ff00aa',
+                        'dark-bg': '#0a0e1a',
+                        'dark-card': '#1a1f2e',
+                        'dark-border': '#2a2f3e',
+                        'dark-purple': '#1a0033',
+                        'dark-blue-1': '#002244',
+                        'dark-blue-2': '#001a33'
+                    },
+                    animation: {
+                        'aurora': 'aurora 15s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'glow': 'glow 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        aurora: {
+                            '0%, 100%': {
+                                backgroundPosition: '0% 50%',
+                                backgroundSize: '200% 200%'
+                            },
+                            '50%': {
+                                backgroundPosition: '100% 50%',
+                                backgroundSize: '200% 200%'
+                            }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        glow: {
+                            '0%, 100%': {
+                                boxShadow: '0 0 5px rgba(0, 255, 170, 0.5), 0 0 20px rgba(0, 255, 170, 0.3)'
+                            },
+                            '50%': {
+                                boxShadow: '0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 0.4)'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Variables - Centralized Color Palette */
+        :root {
+            --aurora-green: #00ffaa;
+            --aurora-blue: #00aaff;
+            --aurora-purple: #aa00ff;
+            --aurora-pink: #ff00aa;
+            --dark-bg: #0a0e1a;
+            --dark-card: #1a1f2e;
+            --dark-border: #2a2f3e;
+            --dark-purple: #1a0033;
+            --dark-blue-1: #002244;
+            --dark-blue-2: #001a33;
+            /* Colors with opacity for overlays and effects */
+            --aurora-green-15: rgba(0, 255, 170, 0.15);
+            --aurora-blue-15: rgba(0, 170, 255, 0.15);
+            --aurora-purple-10: rgba(170, 0, 255, 0.1);
+            --aurora-pink-10: rgba(255, 0, 170, 0.1);
+            --aurora-green-20: rgba(0, 255, 170, 0.2);
+            --aurora-green-30: rgba(0, 255, 170, 0.3);
+            --aurora-green-50: rgba(0, 255, 170, 0.5);
+            --aurora-blue-40: rgba(0, 170, 255, 0.4);
+            --aurora-blue-80: rgba(0, 170, 255, 0.8);
+        }
+
+        /* Aurora gradient background */
+        .aurora-bg {
+            background: linear-gradient(-45deg, var(--dark-bg), var(--dark-purple), var(--dark-blue-1), var(--dark-blue-2));
+            background-size: 400% 400%;
+            animation: aurora 15s ease infinite;
+        }
+
+        /* Aurora light effect overlay */
+        .aurora-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            background:
+                radial-gradient(ellipse at top left, var(--aurora-green-15) 0%, transparent 40%),
+                radial-gradient(ellipse at top right, var(--aurora-blue-15) 0%, transparent 40%),
+                radial-gradient(ellipse at bottom left, var(--aurora-purple-10) 0%, transparent 40%),
+                radial-gradient(ellipse at bottom right, var(--aurora-pink-10) 0%, transparent 40%);
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--aurora-green), var(--aurora-blue));
+            border-radius: 5px;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--aurora-green) 0%, var(--aurora-blue) 50%, var(--aurora-purple) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Card hover effect */
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .card-hover:hover {
+            border-color: var(--aurora-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--aurora-green-20);
+        }
+
+        /* Progress bar animation */
+        @keyframes progressAnimation {
+            0% { width: 0%; }
+        }
+
+        .progress-bar {
+            animation: progressAnimation 2s ease-out forwards;
+        }
+
+        /* Glow animation using CSS variables */
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 5px var(--aurora-green-50), 0 0 20px var(--aurora-green-30);
+            }
+            50% {
+                box-shadow: 0 0 20px var(--aurora-blue-80), 0 0 40px var(--aurora-blue-40);
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-gray-200 aurora-bg">
+    <!-- Aurora overlay effect -->
+    <div class="aurora-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-dark-bg/90 backdrop-blur-md border-b border-dark-border z-50">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold gradient-text">Z01coder</div>
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="#home" class="hover:text-aurora-green transition">Поехали!</a></li>
+                    <li><a href="#about" class="hover:text-aurora-green transition">Обо мне</a></li>
+                    <li><a href="#experience" class="hover:text-aurora-green transition">Опыт</a></li>
+                    <li><a href="#skills" class="hover:text-aurora-green transition">Навыки</a></li>
+                    <li><a href="#services" class="hover:text-aurora-green transition">Услуги</a></li>
+                    <li><a href="#portfolio" class="hover:text-aurora-green transition">Портфолио</a></li>
+                </ul>
+                <!-- Mobile menu button -->
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 space-y-2">
+                <a href="#home" class="block py-2 hover:text-aurora-green">Home</a>
+                <a href="#about" class="block py-2 hover:text-aurora-green">About</a>
+                <a href="#experience" class="block py-2 hover:text-aurora-green">Experience</a>
+                <a href="#skills" class="block py-2 hover:text-aurora-green">Skills</a>
+                <a href="#services" class="block py-2 hover:text-aurora-green">Services</a>
+                <a href="#portfolio" class="block py-2 hover:text-aurora-green">Portfolio</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative">
+        <div class="container mx-auto px-6 text-center z-10">
+            <div class="animate-slide-up">
+                <div class="mx-auto mb-6">
+                    <div class="w-[258px] h-[258px] mx-auto rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple p-1">
+                        <div class="w-full h-full rounded-full bg-dark-bg flex items-center justify-center overflow-hidden">
+                            <img src="img/0.webp" alt="Алексей" class="w-[250px] h-[250px] rounded-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                    Привет, меня зовут <span class="gradient-text">Алексей</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-400 mb-8"><span class="gradient-text font-bold">Я</span> AI Deep-Coding Innovator | Python Full-Stack Developer  </p>
+                <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">
+                    Каждый мой проект — это синтез Python-экспертизы и современных LLM-инструментов для превращения идей в живые и очаровательные адаптивные системы.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#portfolio" class="px-8 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue rounded-full text-dark-bg font-semibold hover:shadow-lg hover:shadow-aurora-green/50 transition transform hover:scale-105">
+                        Мои работы
+                    </a>
+                    <a href="Резюме - Алексей Золотухин.pdf" class="px-8 py-3 border-2 border-aurora-green rounded-full hover:bg-aurora-green hover:text-dark-bg transition transform hover:scale-105">
+                        PDF Резюме
+                    </a>
+                </div>
+                <div class="mt-12 flex justify-center space-x-6">
+                    <a href="https://github.com/Z01coder" class="text-2xl hover:text-aurora-green transition"><i class="fab fa-github"></i></a>
+                    <a href="https://t.me/azvxan" class="text-2xl hover:text-aurora-blue transition"><i class="fab fa-telegram"></i></a>
+                    <a href="mailto:zolotuxin.alexey@gmail.com" class="text-2xl hover:text-aurora-purple transition"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- Animated particles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute w-2 h-2 bg-aurora-green rounded-full animate-float" style="top: 20%; left: 10%;"></div>
+            <div class="absolute w-2 h-2 bg-aurora-blue rounded-full animate-float" style="top: 60%; left: 80%; animation-delay: 1s;"></div>
+            <div class="absolute w-2 h-2 bg-aurora-purple rounded-full animate-float" style="top: 40%; left: 60%; animation-delay: 2s;"></div>
+            <div class="absolute w-2 h-2 bg-aurora-pink rounded-full animate-float" style="top: 80%; left: 30%; animation-delay: 3s;"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Обо мне</h2>
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-gray-400 leading-relaxed">
+                        Мой путь начался с гуманитарных наук — филологии, — но страсть к алгоритмам и логике привела меня в мир Python-разработки. Сегодня я строю мосты между искусственным интеллектом и повседневными задачами: использую современные фреймворки и LLM-инструменты для создания скриптов, приложений и целых систем. Для меня код — это язык, на котором человечество пишет будущее, и я горжусь тем, что помогаю делать этот диалог более осмысленным и эффективным
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        В то время как большинство обывателей бесконечно ноют о несостоятельности ИИ-ассистированного подхода к разработке, я уже более двух лет занимаюсь интенсивной практикой применения LLM-инструментов для разработки самых разнообразных приложений, которые РАБОТАЮТ!
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="bg-dark-card p-4 rounded-lg border border-dark-border">
+                            <div class="text-3xl font-bold text-aurora-green">50+</div>
+                            <div class="text-sm text-gray-400">Проектов</div>
+                        </div>
+                        <div class="bg-dark-card p-4 rounded-lg border border-dark-border">
+                            <div class="text-3xl font-bold text-aurora-blue">2+</div>
+                            <div class="text-sm text-gray-400">Лет опыта</div>
+                        </div>
+                        <div class="bg-dark-card p-4 rounded-lg border border-dark-border">
+                            <div class="text-3xl font-bold text-aurora-purple">3</div>
+                            <div class="text-sm text-gray-400">Курса доп. квалификации</div>
+                        </div>
+                        <div class="bg-dark-card p-4 rounded-lg border border-dark-border">
+                            <div class="text-3xl font-bold text-aurora-pink">5</div>
+                            <div class="text-sm text-gray-400">Сертификатов</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="w-80 h-80 mx-auto rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple p-1">
+                        <div class="w-full h-full rounded-full bg-dark-bg flex items-center justify-center">
+                            <img src="img/rr3.webp" alt="" class="w-full h-full rounded-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-dark-card/30">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Опыт работы</h2>
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="relative pl-8 border-l-2 border-aurora-green">
+                    <div class="absolute -left-2 top-0 w-4 h-4 bg-aurora-green rounded-full"></div>
+                    <div class="bg-dark-card p-6 rounded-lg card-hover">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-aurora-green">Аттестованный Python Python-разработчик</h3>
+                            <span class="text-sm text-gray-400">2025 - н.в.</span>
+                        </div>
+                        <p class="text-gray-300 font-medium mb-2">Фрилансер</p>
+                        <p class="text-gray-400">
+                            Lead development of enterprise-scale web applications, mentor junior developers,
+                            and architect cloud-native solutions using modern tech stacks.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 border-l-2 border-aurora-blue">
+                    <div class="absolute -left-2 top-0 w-4 h-4 bg-aurora-blue rounded-full"></div>
+                    <div class="bg-dark-card p-6 rounded-lg card-hover">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-aurora-blue">Python-разработчик | Стажировка</h3>
+                            <span class="text-sm text-gray-400">2025</span>
+                        </div>
+                        <p class="text-gray-300 font-medium mb-2">ООО "SMAIPL"</p>
+                        <p class="text-gray-400">
+                            Разработал функцию для обработки и очистки входных текстовых данных. Функция была успешно интегрирована в конструктор ботов.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 border-l-2 border-aurora-purple">
+                    <div class="absolute -left-2 top-0 w-4 h-4 bg-aurora-purple rounded-full"></div>
+                    <div class="bg-dark-card p-6 rounded-lg card-hover">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-semibold text-aurora-purple">Курс «Программист на Python с нуля»</h3>
+                            <span class="text-sm text-gray-400">2024 - 2025</span>
+                        </div>
+                        <p class="text-gray-300 font-medium mb-2">Онлайн-университет ZEROCODER</p>
+                        <p class="text-gray-400">
+                            Python-разработка с упором на практику с LLM. Создал 20+ приложений, от игр и ботов до полноценной торговой площадки.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Технологии</h2>
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 justify-items-center">
+                    <!-- HTML -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">HTML</p>
+                    </div>
+                    
+                    <!-- CSS -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">CSS</p>
+                    </div>
+                    
+                    <!-- Python -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Python</p>
+                    </div>
+                    
+                    <!-- Django -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Django</p>
+                    </div>
+                    
+                    <!-- Flask -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg" alt="Flask" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-purple transition-colors duration-300">Flask</p>
+                    </div>
+                    
+                    <!-- Aiogram -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-telegram text-4xl text-aurora-blue group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Aiogram</p>
+                    </div>
+                    
+                    <!-- python-telegram-bot -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fab fa-telegram text-4xl text-aurora-green group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-xs font-medium group-hover:text-aurora-green transition-colors duration-300">python-telegram-bot</p>
+                    </div>
+                    
+                    <!-- SQL -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-database text-4xl text-aurora-purple group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-purple transition-colors duration-300">SQL</p>
+                    </div>
+                    
+                    <!-- Git -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,0,170,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-pink transition-colors duration-300">Git</p>
+                    </div>
+                    
+                    <!-- Linux -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Linux</p>
+                    </div>
+                    
+                    <!-- VirtualBox -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.simpleicons.org/virtualbox/183A61" alt="VirtualBox" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">VirtualBox</p>
+                    </div>
+                    
+                    <!-- Pytest -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-vial text-4xl text-aurora-green group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Pytest</p>
+                    </div>
+                    
+                    <!-- Unittest -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-check-circle text-4xl text-aurora-blue group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Unittest</p>
+                    </div>
+                    
+                    <!-- NumPy -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" alt="NumPy" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">NumPy</p>
+                    </div>
+                    
+                    <!-- Pandas -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Pandas</p>
+                    </div>
+                    
+                    <!-- Matplotlib -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-purple transition-colors duration-300">Matplotlib</p>
+                    </div>
+                    
+                    <!-- BeautifulSoup -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-spider text-4xl text-aurora-purple group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-xs font-medium group-hover:text-aurora-purple transition-colors duration-300">BeautifulSoup</p>
+                    </div>
+                    
+                    <!-- Selenium -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" alt="Selenium" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,0,170,0.6)]">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-pink transition-colors duration-300">Selenium</p>
+                    </div>
+                    
+                    <!-- Pygame -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <i class="fas fa-gamepad text-4xl text-aurora-pink group-hover:drop-shadow-[0_0_15px_rgba(255,0,170,0.8)]"></i>
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-pink transition-colors duration-300">Pygame</p>
+                    </div>
+                    
+                    <!-- Cursor IDE -->
+                    <div class="text-center group">
+                        <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                            <img src="https://cdn.simpleicons.org/cursor/000000" alt="Cursor IDE" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]" style="filter: brightness(0) invert(1);">
+                        </div>
+                        <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Cursor IDE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-dark-card/30">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Услуги</h2>
+            <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+                <div class="bg-dark-card p-6 rounded-lg card-hover text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-green to-aurora-blue flex items-center justify-center">
+                        <i class="fas fa-brain text-2xl text-dark-bg"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Full-Stack разработка с AI</h3>
+                    <p class="text-gray-400">
+                        Создаю умные веб-приложения с поддержкой LLM. Интегрирую ИИ в процесс разработки. Создаю эффективные решения для реальных задач.
+                    </p>
+                </div>
+
+                <div class="bg-dark-card p-6 rounded-lg card-hover text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-blue to-aurora-purple flex items-center justify-center">
+                        <i class="fas fa-robot text-2xl text-dark-bg"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Разработка ботов</h3>
+                    <p class="text-gray-400">
+                        Проектирую и запускаю кастомные Telegram-ботов, которые автоматизируют рабочие процессы, собирают данные и взаимодействуют с пользователями.
+                    </p>
+                </div>
+
+                <div class="bg-dark-card p-6 rounded-lg card-hover text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-purple to-aurora-pink flex items-center justify-center">
+                        <i class="fas fa-chart-line text-2xl text-dark-bg"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Парсинг и анализ данных</h3>
+                    <p class="text-gray-400">
+                        Извлекаю, очищаю и визуализирую данные из разных источников с помощью Selenium, BeautifulSoup, Pandas и Matplotlib.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Портфолио</h2>
+            <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+                <div class="bg-dark-card rounded-lg overflow-hidden card-hover group">
+                    <div class="h-48 bg-gradient-to-br from-aurora-green to-aurora-blue flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-6xl text-dark-bg"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Цветы Весны</h3>
+                        <p class="text-gray-400 mb-4">Сервис доставки цветов на Django с интеграцией Telegram бота</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-aurora-green/20 text-aurora-green rounded text-xs">Django</span>
+                            <span class="px-2 py-1 bg-aurora-blue/20 text-aurora-blue rounded text-xs">Python</span>
+                            <span class="px-2 py-1 bg-aurora-purple/20 text-aurora-purple rounded text-xs">Telegram Bot</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Z01coder/Flower-shop-service" class="text-aurora-green hover:text-aurora-blue transition">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-card rounded-lg overflow-hidden card-hover group">
+                    <div class="h-48 bg-gradient-to-br from-aurora-blue to-aurora-purple flex items-center justify-center">
+                        <i class="fas fa-robot text-6xl text-dark-bg"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Покемон | TG-Бот</h3>
+                        <p class="text-gray-400 mb-4">Telegram-бот для поиска и получения информации о покемонах через PokeAPI</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-aurora-green/20 text-aurora-green rounded text-xs">Python</span>
+                            <span class="px-2 py-1 bg-aurora-blue/20 text-aurora-blue rounded text-xs">Aiogram</span>
+                            <span class="px-2 py-1 bg-aurora-purple/20 text-aurora-purple rounded text-xs">PokeAPI</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Z01coder/Who-is-that-pokemon-TG-bot" class="text-aurora-green hover:text-aurora-blue transition">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-card rounded-lg overflow-hidden card-hover group">
+                    <div class="h-48 bg-gradient-to-br from-aurora-purple to-aurora-pink flex items-center justify-center">
+                        <i class="fas fa-gamepad text-6xl text-dark-bg"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Дебугер | Игра</h3>
+                        <p class="text-gray-400 mb-4">Аркадная игра на Python с использованием библиотеки Pygame</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-aurora-green/20 text-aurora-green rounded text-xs">Python</span>
+                            <span class="px-2 py-1 bg-aurora-blue/20 text-aurora-blue rounded text-xs">Pygame</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/Z01coder/Debuger-game" class="text-aurora-green hover:text-aurora-blue transition">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-dark-border">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-4">
+                <a href="https://github.com/Z01coder" class="text-2xl mx-2 hover:text-aurora-green transition"><i class="fab fa-github"></i></a>
+                <a href="https://t.me/azvxan" class="text-2xl mx-2 hover:text-aurora-blue transition"><i class="fab fa-telegram"></i></a>
+                <a href="mailto:zolotuxin.alexey@gmail.com" class="text-2xl mx-2 hover:text-aurora-purple transition"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="text-gray-400">
+                © 2025 Алексей Золотухин. Built with
+                <a href="https://github.com/OSSPhilippines/freefolio" class="text-aurora-green hover:text-aurora-blue transition">
+                    Freefolio
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-slide-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for animation
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -24,16 +24,17 @@
             theme: {
                 extend: {
                     colors: {
-                        'aurora-green': '#00ffaa',
-                        'aurora-blue': '#00aaff',
-                        'aurora-purple': '#aa00ff',
-                        'aurora-pink': '#ff00aa',
-                        'dark-bg': '#0a0e1a',
-                        'dark-card': '#1a1f2e',
-                        'dark-border': '#2a2f3e',
-                        'dark-purple': '#1a0033',
-                        'dark-blue-1': '#002244',
-                        'dark-blue-2': '#001a33'
+                        /* New warm dark-gray + neon orange + warm lime-green palette */
+                        'aurora-green': '#B8FF2C',   /* warm lime */
+                        'aurora-blue': '#FF8A1A',    /* neon orange */
+                        'aurora-purple': '#2B7A2E',  /* deep warm green */
+                        'aurora-pink': '#FFC14A',    /* soft warm orange */
+                        'dark-bg': '#11100D',        /* warm charcoal */
+                        'dark-card': '#1A1813',      /* warm dark gray */
+                        'dark-border': '#2B2922',    /* warm border gray */
+                        'dark-purple': '#14120F',    /* deep warm gray */
+                        'dark-blue-1': '#0F0E0B',    /* near-black warm */
+                        'dark-blue-2': '#181611'     /* warm graphite */
                     },
                     animation: {
                         'aurora': 'aurora 15s ease-in-out infinite',
@@ -55,7 +56,9 @@
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' }
+                            '25%': { transform: 'translateY(-36px)' },
+                            '50%': { transform: 'translateY(0px)' },
+                            '75%': { transform: 'translateY(36px)' }
                         },
                         slideUp: {
                             '0%': { transform: 'translateY(20px)', opacity: '0' },
@@ -63,10 +66,10 @@
                         },
                         glow: {
                             '0%, 100%': {
-                                boxShadow: '0 0 5px rgba(0, 255, 170, 0.5), 0 0 20px rgba(0, 255, 170, 0.3)'
+                                boxShadow: '0 0 5px rgba(184, 255, 44, 0.5), 0 0 20px rgba(184, 255, 44, 0.3)'
                             },
                             '50%': {
-                                boxShadow: '0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 0.4)'
+                                boxShadow: '0 0 20px rgba(255, 138, 26, 0.8), 0 0 40px rgba(255, 138, 26, 0.4)'
                             }
                         }
                     }
@@ -78,26 +81,30 @@
     <style>
         /* CSS Variables - Centralized Color Palette */
         :root {
-            --aurora-green: #00ffaa;
-            --aurora-blue: #00aaff;
-            --aurora-purple: #aa00ff;
-            --aurora-pink: #ff00aa;
-            --dark-bg: #0a0e1a;
-            --dark-card: #1a1f2e;
-            --dark-border: #2a2f3e;
-            --dark-purple: #1a0033;
-            --dark-blue-1: #002244;
-            --dark-blue-2: #001a33;
+            /* New warm dark-gray + neon orange + warm lime-green palette */
+            --aurora-green: #B8FF2C;  /* warm lime */
+            --aurora-blue: #FF8A1A;   /* neon orange */
+            --aurora-purple: #2B7A2E; /* deep warm green */
+            --aurora-pink: #FFC14A;   /* soft warm orange */
+            --dark-bg: #11100D;       /* warm charcoal */
+            --dark-card: #1A1813;     /* warm dark gray */
+            --dark-border: #2B2922;   /* warm border gray */
+            --dark-purple: #14120F;   /* deep warm gray */
+            --dark-blue-1: #0F0E0B;   /* near-black warm */
+            --dark-blue-2: #181611;   /* warm graphite */
+            /* Warm white for typography and soft glow */
+            --warm-white: #EDE4D6;
+            --warm-white-12: rgba(237, 228, 214, 0.12);
             /* Colors with opacity for overlays and effects */
-            --aurora-green-15: rgba(0, 255, 170, 0.15);
-            --aurora-blue-15: rgba(0, 170, 255, 0.15);
-            --aurora-purple-10: rgba(170, 0, 255, 0.1);
-            --aurora-pink-10: rgba(255, 0, 170, 0.1);
-            --aurora-green-20: rgba(0, 255, 170, 0.2);
-            --aurora-green-30: rgba(0, 255, 170, 0.3);
-            --aurora-green-50: rgba(0, 255, 170, 0.5);
-            --aurora-blue-40: rgba(0, 170, 255, 0.4);
-            --aurora-blue-80: rgba(0, 170, 255, 0.8);
+            --aurora-green-15: rgba(184, 255, 44, 0.15);
+            --aurora-blue-15: rgba(255, 138, 26, 0.15);
+            --aurora-purple-10: rgba(43, 122, 46, 0.10);
+            --aurora-pink-10: rgba(255, 193, 74, 0.10);
+            --aurora-green-20: rgba(184, 255, 44, 0.20);
+            --aurora-green-30: rgba(184, 255, 44, 0.30);
+            --aurora-green-50: rgba(184, 255, 44, 0.50);
+            --aurora-blue-40: rgba(255, 138, 26, 0.40);
+            --aurora-blue-80: rgba(255, 138, 26, 0.80);
         }
 
         /* Aurora gradient background */
@@ -115,7 +122,7 @@
             right: 0;
             height: 100vh;
             background:
-                radial-gradient(ellipse at top left, var(--aurora-green-15) 0%, transparent 40%),
+                radial-gradient(ellipse at top left, var(--warm-white-12) 0%, transparent 40%),
                 radial-gradient(ellipse at top right, var(--aurora-blue-15) 0%, transparent 40%),
                 radial-gradient(ellipse at bottom left, var(--aurora-purple-10) 0%, transparent 40%),
                 radial-gradient(ellipse at bottom right, var(--aurora-pink-10) 0%, transparent 40%);
@@ -144,7 +151,7 @@
 
         /* Gradient text */
         .gradient-text {
-            background: linear-gradient(135deg, var(--aurora-green) 0%, var(--aurora-blue) 50%, var(--aurora-purple) 100%);
+            background: linear-gradient(135deg, var(--aurora-green) 0%, var(--aurora-blue) 55%, var(--aurora-purple) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -153,7 +160,7 @@
         /* Gradient underline */
         .gradient-underline {
             text-decoration: none;
-            background-image: linear-gradient(135deg, var(--aurora-green) 0%, var(--aurora-blue) 50%, var(--aurora-purple) 100%);
+            background-image: linear-gradient(135deg, var(--aurora-green) 0%, var(--aurora-blue) 55%, var(--aurora-purple) 100%);
             background-repeat: no-repeat;
             background-size: 100% 2px;
             background-position: 0 100%;
@@ -202,9 +209,42 @@
         .animate-slide-up {
             animation: slideUp 0.5s ease-out forwards;
         }
+
+        /*
+         * Microblog side character (G-man):
+         * - Always stays on the right edge without overlapping microblog cards
+         * - Does not capture pointer events
+         * - Moves out of the screen when the cursor approaches
+         */
+        #blog {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .microblog-gman {
+            position: absolute;
+            right: 0;
+            bottom: 16px;
+            width: clamp(92px, 12vw, 150px);
+            height: auto;
+            transform: translateX(0);
+            transform-origin: center;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.35));
+            opacity: 0.95;
+            transition: transform 160ms ease-out;
+        }
+
+        /* Keep cards above the decorative image just in case */
+        #blog .card-hover {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
-<body class="bg-dark-bg text-gray-200 aurora-bg">
+<body class="bg-dark-bg text-[color:var(--warm-white)] aurora-bg">
     <!-- Aurora overlay effect -->
     <div class="aurora-overlay"></div>
 
@@ -245,7 +285,7 @@
         <div class="container mx-auto px-6 text-center z-10">
             <div class="animate-slide-up">
                 <div class="mx-auto mb-6">
-                    <div class="w-[258px] h-[258px] mx-auto rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple p-1">
+                    <div class="w-[258px] h-[258px] mx-auto rounded-full bg-gradient-to-br from-aurora-pink via-aurora-blue to-dark-border p-1">
                         <div class="w-full h-full rounded-full bg-dark-bg flex items-center justify-center overflow-hidden">
                             <img src="img/0.webp" alt="Алексей" class="w-[250px] h-[250px] rounded-full object-cover">
                         </div>
@@ -259,7 +299,7 @@
                     Каждый мой проект — это синтез Python-экспертизы и современных LLM-инструментов для превращения идей в живые и очаровательные адаптивные системы.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#portfolio" class="px-8 py-3 bg-gradient-to-r from-aurora-green to-aurora-blue rounded-full text-dark-bg font-semibold hover:shadow-lg hover:shadow-aurora-green/50 transition transform hover:scale-105">
+                    <a href="#portfolio" class="px-8 py-3 bg-gradient-to-r from-aurora-pink to-aurora-blue rounded-full text-dark-bg font-semibold hover:shadow-lg hover:shadow-aurora-blue/50 transition transform hover:scale-105">
                         Мои работы
                     </a>
                     <a href="Резюме А. Золотухин.pdf?v=2" class="px-8 py-3 border-2 border-aurora-green rounded-full hover:bg-aurora-green hover:text-dark-bg transition transform hover:scale-105">
@@ -279,7 +319,7 @@
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 60%; left: 80%; animation-delay: 0.5s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 40%; left: 60%; animation-delay: 1s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-pink rounded-full animate-float" style="top: 80%; left: 30%; animation-delay: 1.5s;"></div>
-            <div class="absolute w-1 h-1 bg-aurora-green rounded-full animate-float" style="top: 15%; left: 70%; animation-delay: 2s;"></div>
+            <div class="absolute w-0.5 h-0.5 bg-[color:var(--warm-white)] rounded-full animate-float" style="top: 15%; left: 70%; animation-delay: 2s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 75%; left: 15%; animation-delay: 2.5s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 50%; left: 90%; animation-delay: 3s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-pink rounded-full animate-float" style="top: 90%; left: 40%; animation-delay: 3.5s;"></div>
@@ -295,7 +335,7 @@
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-green rounded-full animate-float" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 60%; right: 15%; animation-delay: 1s;"></div>
-            <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 80%; left: 5%; animation-delay: 2s;"></div>
+            <div class="absolute w-0.5 h-0.5 bg-[color:var(--warm-white)] rounded-full animate-float" style="top: 80%; left: 5%; animation-delay: 2s;"></div>
         </div>
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Обо мне</h2>
@@ -327,7 +367,7 @@
                     </div>
                 </div>
                 <div class="relative">
-                    <div class="w-80 h-80 mx-auto rounded-full bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple p-1">
+                    <div class="w-80 h-80 mx-auto rounded-full bg-gradient-to-br from-aurora-pink via-aurora-blue to-dark-border p-1">
                         <div class="w-full h-full rounded-full bg-dark-bg flex items-center justify-center">
                             <img src="img/rr3.webp" alt="" class="w-full h-full rounded-full object-cover">
                         </div>
@@ -338,7 +378,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 bg-dark-card/30 scroll-animate">
+    <section id="experience" class="py-20 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-pink rounded-full animate-float" style="top: 15%; left: 20%; animation-delay: 0.5s;"></div>
@@ -410,7 +450,7 @@
                     <!-- HTML -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">HTML</p>
                     </div>
@@ -418,7 +458,7 @@
                     <!-- CSS -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,138,26,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">CSS</p>
                     </div>
@@ -426,7 +466,7 @@
                     <!-- Python -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Python</p>
                     </div>
@@ -434,7 +474,7 @@
                     <!-- Django -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.8)]" style="filter: brightness(0) invert(1) sepia(100%) saturate(200%) hue-rotate(120deg);">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.8)]" style="filter: brightness(0) invert(1) sepia(100%) saturate(200%) hue-rotate(120deg);">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Django</p>
                     </div>
@@ -450,7 +490,7 @@
                     <!-- Aiogram -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fab fa-telegram text-4xl text-aurora-blue group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)]"></i>
+                            <i class="fab fa-telegram text-4xl text-aurora-blue group-hover:drop-shadow-[0_0_15px_rgba(255,138,26,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Aiogram</p>
                     </div>
@@ -458,7 +498,7 @@
                     <!-- python-telegram-bot -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fab fa-telegram text-4xl text-aurora-green group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.8)]"></i>
+                            <i class="fab fa-telegram text-4xl text-aurora-green group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-xs font-medium group-hover:text-aurora-green transition-colors duration-300">Python-telegram-bot</p>
                     </div>
@@ -466,7 +506,7 @@
                     <!-- SQL -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fas fa-database text-4xl text-aurora-purple group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.8)]"></i>
+                            <i class="fas fa-database text-4xl text-aurora-purple group-hover:drop-shadow-[0_0_15px_rgba(43,122,46,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-purple transition-colors duration-300">SQL</p>
                     </div>
@@ -474,7 +514,7 @@
                     <!-- Git -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,0,170,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,193,74,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-pink transition-colors duration-300">Git</p>
                     </div>
@@ -482,7 +522,7 @@
                     <!-- Linux -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Linux</p>
                     </div>
@@ -490,7 +530,7 @@
                     <!-- VirtualBox -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.simpleicons.org/virtualbox/183A61" alt="VirtualBox" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                            <img src="https://cdn.simpleicons.org/virtualbox/183A61" alt="VirtualBox" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,138,26,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">VirtualBox</p>
                     </div>
@@ -498,7 +538,7 @@
                     <!-- Pytest -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fas fa-vial text-4xl text-aurora-green group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.8)]"></i>
+                            <i class="fas fa-vial text-4xl text-aurora-green group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Pytest</p>
                     </div>
@@ -506,7 +546,7 @@
                     <!-- Unittest -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fas fa-check-circle text-4xl text-aurora-blue group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.8)]"></i>
+                            <i class="fas fa-check-circle text-4xl text-aurora-blue group-hover:drop-shadow-[0_0_15px_rgba(255,138,26,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Unittest</p>
                     </div>
@@ -514,7 +554,7 @@
                     <!-- NumPy -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" alt="NumPy" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" alt="NumPy" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">NumPy</p>
                     </div>
@@ -522,7 +562,7 @@
                     <!-- Pandas -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,170,255,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,138,26,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-blue transition-colors duration-300">Pandas</p>
                     </div>
@@ -530,7 +570,7 @@
                     <!-- Matplotlib -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(43,122,46,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-purple transition-colors duration-300">Matplotlib</p>
                     </div>
@@ -538,7 +578,7 @@
                     <!-- BeautifulSoup -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fas fa-spider text-4xl text-aurora-purple group-hover:drop-shadow-[0_0_15px_rgba(170,0,255,0.8)]"></i>
+                            <i class="fas fa-spider text-4xl text-aurora-purple group-hover:drop-shadow-[0_0_15px_rgba(43,122,46,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-xs font-medium group-hover:text-aurora-purple transition-colors duration-300">BeautifulSoup</p>
                     </div>
@@ -546,7 +586,7 @@
                     <!-- Selenium -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" alt="Selenium" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,0,170,0.6)]">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" alt="Selenium" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(255,193,74,0.6)]">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-pink transition-colors duration-300">Selenium</p>
                     </div>
@@ -554,7 +594,7 @@
                     <!-- Pygame -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <i class="fas fa-gamepad text-4xl text-aurora-pink group-hover:drop-shadow-[0_0_15px_rgba(255,0,170,0.8)]"></i>
+                            <i class="fas fa-gamepad text-4xl text-aurora-pink group-hover:drop-shadow-[0_0_15px_rgba(255,193,74,0.8)]"></i>
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-pink transition-colors duration-300">Pygame</p>
                     </div>
@@ -562,7 +602,7 @@
                     <!-- Cursor IDE -->
                     <div class="text-center group">
                         <div class="w-12 h-12 mx-auto mb-1 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                            <img src="https://cdn.simpleicons.org/cursor/000000" alt="Cursor IDE" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(0,255,170,0.6)]" style="filter: brightness(0) invert(1);">
+                            <img src="https://cdn.simpleicons.org/cursor/000000" alt="Cursor IDE" class="w-full h-full group-hover:drop-shadow-[0_0_15px_rgba(184,255,44,0.6)]" style="filter: brightness(0) invert(1);">
                         </div>
                         <p class="text-gray-300 text-sm font-medium group-hover:text-aurora-green transition-colors duration-300">Cursor IDE</p>
                     </div>
@@ -572,7 +612,7 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-dark-card/30 scroll-animate">
+    <section id="services" class="py-20 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 20%; left: 14%; animation-delay: 0.5s;"></div>
@@ -583,7 +623,7 @@
             <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Услуги</h2>
             <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
                 <div class="bg-dark-card p-6 rounded-lg card-hover text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-green to-aurora-blue flex items-center justify-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-pink to-aurora-blue flex items-center justify-center">
                         <i class="fas fa-brain text-2xl text-dark-bg"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">Full-Stack разработка с AI</h3>
@@ -593,7 +633,7 @@
                 </div>
 
                 <div class="bg-dark-card p-6 rounded-lg card-hover text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-blue to-aurora-purple flex items-center justify-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-aurora-blue to-aurora-pink flex items-center justify-center">
                         <i class="fas fa-robot text-2xl text-dark-bg"></i>
                     </div>
                     <h3 class="text-xl font-semibold mb-3">Разработка ботов</h3>
@@ -619,7 +659,7 @@
     <section id="portfolio" class="py-20 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute w-1 h-1 bg-aurora-green rounded-full animate-float" style="top: 15%; left: 9%; animation-delay: 0s;"></div>
+            <div class="absolute w-0.5 h-0.5 bg-[color:var(--warm-white)] rounded-full animate-float" style="top: 15%; left: 9%; animation-delay: 0s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 50%; right: 4%; animation-delay: 1s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 75%; left: 15%; animation-delay: 2s;"></div>
         </div>
@@ -694,18 +734,26 @@
     </section>
 
     <!-- Micro-blog Section -->
-    <section id="blog" class="py-20 bg-dark-card/30 scroll-animate">
+    <section id="blog" class="py-20 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-green rounded-full animate-float" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 60%; right: 15%; animation-delay: 1s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 80%; left: 5%; animation-delay: 2s;"></div>
         </div>
+        <img
+            id="microblogGman"
+            class="microblog-gman"
+            src="img/G-man_hl2.png"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+        >
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Микроблог</h2>
             <div class="max-w-6xl mx-auto">
                 <article class="bg-dark-card rounded-lg overflow-hidden card-hover flex flex-col md:flex-row">
-                    <div class="md:w-1/3 bg-gradient-to-br from-aurora-green via-aurora-blue to-aurora-purple flex items-center justify-center p-8">
+                    <div class="md:w-1/3 bg-gradient-to-br from-aurora-pink via-aurora-blue to-aurora-purple flex items-center justify-center p-8">
                         <h3 class="text-2xl md:text-3xl font-bold text-dark-bg text-center">Что такое Deep-Coding?</h3>
                     </div>
                     <div class="md:w-2/3 p-6">
@@ -830,6 +878,55 @@
                 }
             });
         });
+
+        // Microblog: G-man avoids the cursor by moving right off-screen
+        (() => {
+            const gman = document.getElementById('microblogGman');
+            if (!gman) return;
+
+            const AVOID_RADIUS_PX = 180;
+            const BASE_PADDING_PX = 18;
+            const MAX_PUSH_PX = 260;
+
+            let lastMouseX = 0;
+            let lastMouseY = 0;
+            let rafId = 0;
+
+            const update = () => {
+                rafId = 0;
+
+                const rect = gman.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const dx = lastMouseX - centerX;
+                const dy = lastMouseY - centerY;
+                const dist = Math.hypot(dx, dy);
+
+                if (dist >= AVOID_RADIUS_PX) {
+                    gman.style.transform = 'translateX(0)';
+                    return;
+                }
+
+                const push = Math.min(
+                    MAX_PUSH_PX,
+                    Math.max(0, (AVOID_RADIUS_PX - dist) + BASE_PADDING_PX),
+                );
+                gman.style.transform = `translateX(${push}px)`;
+            };
+
+            window.addEventListener('mousemove', (e) => {
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                if (rafId) return;
+                rafId = window.requestAnimationFrame(update);
+            }, { passive: true });
+
+            window.addEventListener('resize', () => {
+                if (rafId) return;
+                rafId = window.requestAnimationFrame(update);
+            }, { passive: true });
+        })();
     </script>
 </body>
 </html>

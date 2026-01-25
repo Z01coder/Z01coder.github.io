@@ -667,8 +667,14 @@
             <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Портфолио</h2>
             <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
                 <div class="bg-dark-card rounded-lg overflow-hidden card-hover group">
-                    <div class="h-48">
-                        <img src="img/b.webp" alt="Цветы Весны" class="w-full h-full object-cover">
+                    <div class="h-48 relative">
+                        <img id="flowersImage" src="img/b.webp" alt="Цветы Весны" class="w-full h-full object-cover transition-opacity duration-300">
+                        <button onclick="changeFlowersImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-dark-bg/80 hover:bg-dark-bg text-aurora-green hover:text-aurora-blue rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-aurora-green/50" aria-label="Предыдущее изображение">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button onclick="changeFlowersImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-dark-bg/80 hover:bg-dark-bg text-aurora-green hover:text-aurora-blue rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-aurora-green/50" aria-label="Следующее изображение">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Цветы Весны | Сайт</h3>
@@ -687,8 +693,14 @@
                 </div>
 
                 <div class="bg-dark-card rounded-lg overflow-hidden card-hover group">
-                    <div class="h-48">
-                        <img src="img/a.webp" alt="Покемон | TG-Бот" class="w-full h-full object-cover">
+                    <div class="h-48 relative">
+                        <img id="pokemonImage" src="img/a.webp" alt="Покемон | TG-Бот" class="w-full h-full object-cover transition-opacity duration-300">
+                        <button onclick="changePokemonImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-dark-bg/80 hover:bg-dark-bg text-aurora-green hover:text-aurora-blue rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-aurora-green/50" aria-label="Предыдущее изображение">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button onclick="changePokemonImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-dark-bg/80 hover:bg-dark-bg text-aurora-green hover:text-aurora-blue rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-aurora-green/50" aria-label="Следующее изображение">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Покемон | TG-Бот</h3>
@@ -707,8 +719,14 @@
                 </div>
 
                 <div class="bg-dark-card rounded-lg overflow-hidden card-hover group">
-                    <div class="h-48">
-                        <img src="img/c.webp" alt="Дебугер | Игра" class="w-full h-full object-cover">
+                    <div class="h-48 relative">
+                        <img id="debuggerImage" src="img/c.webp" alt="Дебугер | Игра" class="w-full h-full object-cover transition-opacity duration-300">
+                        <button onclick="changeDebuggerImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-dark-bg/80 hover:bg-dark-bg text-aurora-green hover:text-aurora-blue rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-aurora-green/50" aria-label="Предыдущее изображение">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button onclick="changeDebuggerImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-dark-bg/80 hover:bg-dark-bg text-aurora-green hover:text-aurora-blue rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-aurora-green/50" aria-label="Следующее изображение">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-2">Дебугер | Игра</h3>
@@ -927,6 +945,78 @@
                 rafId = window.requestAnimationFrame(update);
             }, { passive: true });
         })();
+
+        // Переключение изображений для карточки Покемон
+        const pokemonImages = ['img/a.webp', 'img/aaa.webp', 'img/aaa1.webp'];
+        let currentPokemonImageIndex = 0;
+
+        function changePokemonImage(direction) {
+            currentPokemonImageIndex += direction;
+            
+            // Циклическое переключение
+            if (currentPokemonImageIndex < 0) {
+                currentPokemonImageIndex = pokemonImages.length - 1;
+            } else if (currentPokemonImageIndex >= pokemonImages.length) {
+                currentPokemonImageIndex = 0;
+            }
+            
+            const imageElement = document.getElementById('pokemonImage');
+            if (imageElement) {
+                imageElement.style.opacity = '0';
+                setTimeout(() => {
+                    imageElement.src = pokemonImages[currentPokemonImageIndex];
+                    imageElement.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Переключение изображений для карточки Дебугер
+        const debuggerImages = ['img/c.webp', 'img/ссс.webp', 'img/ссс1.webp'];
+        let currentDebuggerImageIndex = 0;
+
+        function changeDebuggerImage(direction) {
+            currentDebuggerImageIndex += direction;
+            
+            // Циклическое переключение
+            if (currentDebuggerImageIndex < 0) {
+                currentDebuggerImageIndex = debuggerImages.length - 1;
+            } else if (currentDebuggerImageIndex >= debuggerImages.length) {
+                currentDebuggerImageIndex = 0;
+            }
+            
+            const imageElement = document.getElementById('debuggerImage');
+            if (imageElement) {
+                imageElement.style.opacity = '0';
+                setTimeout(() => {
+                    imageElement.src = debuggerImages[currentDebuggerImageIndex];
+                    imageElement.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Переключение изображений для карточки Цветы Весны
+        const flowersImages = ['img/b.webp', 'img/bbb.webp', 'img/bbb1.webp'];
+        let currentFlowersImageIndex = 0;
+
+        function changeFlowersImage(direction) {
+            currentFlowersImageIndex += direction;
+            
+            // Циклическое переключение
+            if (currentFlowersImageIndex < 0) {
+                currentFlowersImageIndex = flowersImages.length - 1;
+            } else if (currentFlowersImageIndex >= flowersImages.length) {
+                currentFlowersImageIndex = 0;
+            }
+            
+            const imageElement = document.getElementById('flowersImage');
+            if (imageElement) {
+                imageElement.style.opacity = '0';
+                setTimeout(() => {
+                    imageElement.src = flowersImages[currentFlowersImageIndex];
+                    imageElement.style.opacity = '1';
+                }, 150);
+            }
+        }
     </script>
 </body>
 </html>

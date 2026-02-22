@@ -17,6 +17,7 @@
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
     <!-- Custom Tailwind Config -->
     <script>
@@ -212,9 +213,9 @@
 
         /*
          * Microblog side character (G-man):
-         * - Always stays on the right edge without overlapping microblog cards
-         * - Does not capture pointer events
-         * - Moves out of the screen when the cursor approaches
+         * - Fixed at the viewport right edge (outside content-panel / golden frame)
+         * - Visible only when blog section is in view
+         * - Does not capture pointer events; moves right when cursor approaches
          */
         #blog {
             position: relative;
@@ -222,7 +223,7 @@
         }
 
         .microblog-gman {
-            position: absolute;
+            position: fixed;
             right: 0;
             bottom: 16px;
             width: clamp(92px, 12vw, 150px);
@@ -231,10 +232,16 @@
             transform-origin: center;
             pointer-events: none;
             user-select: none;
-            z-index: 1;
+            z-index: 25;
             filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.35));
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease, transform 160ms ease-out;
+        }
+
+        .microblog-gman.microblog-gman-visible {
             opacity: 0.95;
-            transition: transform 160ms ease-out;
+            visibility: visible;
         }
 
         /* Keep cards above the decorative image just in case */
@@ -242,14 +249,39 @@
             position: relative;
             z-index: 2;
         }
+
+        /* Сплошное полотно: лёгкий затемнённый фон под содержимым, ширина по границам контента + отступ */
+        .content-panel {
+            position: relative;
+            z-index: 10;
+            max-width: 80rem; /* чуть шире типичного max-w-6xl контента */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background: rgba(17, 16, 13, 0.72);
+            min-height: 100vh;
+            border-left: 1px solid rgba(212, 175, 55, 0.6);
+            border-right: 1px solid rgba(212, 175, 55, 0.6);
+        }
     </style>
 </head>
-<body class="bg-dark-bg text-[color:var(--warm-white)] aurora-bg">
-    <!-- Aurora overlay effect -->
-    <div class="aurora-overlay"></div>
+<body class="bg-black text-[color:var(--warm-white)] min-h-screen">
+    <!-- Matrix Rain background -->
+    <canvas id="matrix-canvas" class="fixed inset-0 w-full h-full z-0" style="display: block;"></canvas>
+
+    <!-- G-Man: viewport-fixed, outside content panel; visibility toggled by blog section -->
+    <img
+        id="microblogGman"
+        class="microblog-gman"
+        src="img/G-man_hl2.png"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+    >
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-dark-bg/90 backdrop-blur-md border-b border-dark-border z-50">
+    <nav class="fixed top-0 w-full bg-dark-bg/90 backdrop-blur-md border-b border-dark-border z-50 relative">
         <div class="container mx-auto px-6 py-3">
             <div class="flex justify-between items-center">
                 <div class="text-2xl font-bold gradient-text">Z01coder</div>
@@ -280,8 +312,9 @@
         </div>
     </nav>
 
+    <main class="content-panel">
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative">
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative z-10">
         <div class="container mx-auto px-6 text-center z-10">
             <div class="animate-slide-up">
                 <div class="mx-auto mb-6">
@@ -294,9 +327,10 @@
                 <h1 class="text-5xl md:text-7xl font-bold mb-4">
                     Привет, меня зовут <span class="gradient-text">Алексей</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-400 mb-8"><span class="gradient-text font-bold">Я</span> AI <span class="gradient-underline">Deep-Coding</span><a href="#blog" class="ml-2 text-aurora-green hover:text-aurora-blue transition inline-block"><i class="fas fa-blog"></i></a> Innovator | Python Full-Stack Developer  </p>
+                <p class="text-xl md:text-2xl"><span class="gradient-text font-bold">Я</span> <span class="gradient-text">разработчик полного цикла на Python</span></p>
+                <p class="text-xl md:text-2xl mb-8 text-gray-400">Python Full-Stack Developer</p>
                 <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-12">
-                    Каждый мой проект — это синтез Python-экспертизы и современных LLM-инструментов для превращения идей в живые и очаровательные адаптивные системы.
+                    Синтез Python-экспертизы и современных LLM-инструментов.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#portfolio" class="px-8 py-3 bg-gradient-to-r from-aurora-pink to-aurora-blue rounded-full text-dark-bg font-semibold hover:shadow-lg hover:shadow-aurora-blue/50 transition transform hover:scale-105">
@@ -330,7 +364,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 relative scroll-animate">
+    <section id="about" class="py-20 relative z-10 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-green rounded-full animate-float" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
@@ -378,7 +412,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 scroll-animate">
+    <section id="experience" class="py-20 relative z-10 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-pink rounded-full animate-float" style="top: 15%; left: 20%; animation-delay: 0.5s;"></div>
@@ -436,7 +470,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 scroll-animate">
+    <section id="skills" class="py-20 relative z-10 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 25%; left: 8%; animation-delay: 0s;"></div>
@@ -612,7 +646,7 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 scroll-animate">
+    <section id="services" class="py-20 relative z-10 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 20%; left: 14%; animation-delay: 0.5s;"></div>
@@ -656,7 +690,7 @@
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 scroll-animate">
+    <section id="portfolio" class="py-20 relative z-10 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-0.5 h-0.5 bg-[color:var(--warm-white)] rounded-full animate-float" style="top: 15%; left: 9%; animation-delay: 0s;"></div>
@@ -752,38 +786,30 @@
     </section>
 
     <!-- Micro-blog Section -->
-    <section id="blog" class="py-20 scroll-animate">
+    <section id="blog" class="py-20 relative z-10 scroll-animate">
         <!-- Animated particles -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute w-1 h-1 bg-aurora-green rounded-full animate-float" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-blue rounded-full animate-float" style="top: 60%; right: 15%; animation-delay: 1s;"></div>
             <div class="absolute w-1 h-1 bg-aurora-purple rounded-full animate-float" style="top: 80%; left: 5%; animation-delay: 2s;"></div>
         </div>
-        <img
-            id="microblogGman"
-            class="microblog-gman"
-            src="img/G-man_hl2.png"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-        >
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Микроблог</h2>
             <div class="max-w-6xl mx-auto">
                 <article class="bg-dark-card rounded-lg overflow-hidden card-hover flex flex-col md:flex-row">
                     <div class="md:w-1/3 bg-gradient-to-br from-aurora-pink via-aurora-blue to-aurora-purple flex items-center justify-center p-8">
-                        <h3 class="text-2xl md:text-3xl font-bold text-dark-bg text-center">Что такое Deep-Coding?</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-dark-bg text-center">Что такое AI-Driven разработка?</h3>
                     </div>
                     <div class="md:w-2/3 p-6">
                         <p class="text-gray-400 leading-relaxed">
-                            Если вайб-кодинг — это быстрый поток сознания и генерация кода «по ощущениям», то дип-кодинг — это его профессиональная и инженерная эволюция. Это системный подход, где разработчик не просто пассивно принимает код от ИИ, а активно управляет процессом, делая акцент на качестве, понимании и контроле.
+                            AI-Driven разработка (AIDD) — это методология создания программного обеспечения, в которой искусственный интеллект стратегически интегрирован на всех этапах жизненного цикла: от планирования и проектирования до тестирования и деплоя. В отличие от пассивного использования AI-инструментов, разработчик выступает архитектором решения: ставит задачи, контролирует качество кода, принимает архитектурные решения и сохраняет полную ответственность за бизнес-логику. AIDD фокусируется на создании масштабируемого, безопасного и готового к продакшену программного обеспечения.
                         </p>
                     </div>
                 </article>
 
                 <article class="bg-dark-card rounded-lg overflow-hidden card-hover mt-8">
                     <div class="py-6 bg-gradient-to-br from-aurora-blue via-aurora-purple to-aurora-pink flex items-center justify-center">
-                        <h3 class="text-2xl md:text-3xl font-bold text-dark-bg text-center px-6">Сравнение: Вайб-кодинг vs Дип-кодинг</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-dark-bg text-center px-6">Сравнение: Вайб-кодинг vs AI-Driven разработка</h3>
                     </div>
                     <div class="p-6">
                         <div class="overflow-x-auto">
@@ -791,35 +817,35 @@
                                 <thead>
                                     <tr class="border-b border-dark-border">
                                         <th class="text-left p-4 text-aurora-green font-semibold">Критерий</th>
-                                        <th class="text-left p-4 text-aurora-blue font-semibold">Вайб-кодинг (Vibe Coding)</th>
-                                        <th class="text-left p-4 text-aurora-purple font-semibold">Дип-кодинг (Deep Coding)</th>
+                                        <th class="text-left p-4 text-aurora-blue font-semibold">Вайб-кодинг</th>
+                                        <th class="text-left p-4 text-aurora-purple font-semibold">AI-Driven разработка</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-b border-dark-border/50">
                                         <td class="p-4 text-gray-300 font-medium">Основная цель</td>
-                                        <td class="p-4 text-gray-400">Быстрое прототипирование, генерация идей, «поток».</td>
-                                        <td class="p-4 text-gray-400">Создание качественного, поддерживаемого кода. Контроль и понимание.</td>
+                                        <td class="p-4 text-gray-400">Быстрое прототипирование и эксперименты. Идеален для личных проектов и исследования идей.</td>
+                                        <td class="p-4 text-gray-400">Создание качественного, поддерживаемого и масштабируемого кода для продакшена. Системная интеграция AI в процесс разработки с фокусом на безопасность, архитектуру и долгосрочную поддержку.</td>
                                     </tr>
                                     <tr class="border-b border-dark-border/50">
                                         <td class="p-4 text-gray-300 font-medium">Роль разработчика</td>
-                                        <td class="p-4 text-gray-400">Направляющий, вдохновитель.</td>
-                                        <td class="p-4 text-gray-400">Архитектор, ревьюер, менеджер.</td>
+                                        <td class="p-4 text-gray-400">«Оператор AI» — задаёт направление, доверяет интуиции и быстро итерирует. Чаще всего это соло-разработчик, который работает в потоке и полагается на AI для генерации кода «на лету».</td>
+                                        <td class="p-4 text-gray-400">Архитектор и ревьюер. Разработчик принимает ключевые архитектурные решения, владеет бизнес-логикой, проводит код-ревью, тестирует и обеспечивает качество. AI — инструмент, а не замена экспертизы.</td>
                                     </tr>
                                     <tr class="border-b border-dark-border/50">
                                         <td class="p-4 text-gray-300 font-medium">Фокус внимания</td>
-                                        <td class="p-4 text-gray-400">На скорости и результате «здесь и сейчас».</td>
-                                        <td class="p-4 text-gray-400">На процессе, качестве изменений и долгосрочной структуре.</td>
+                                        <td class="p-4 text-gray-400">Скорость и результат «здесь и сейчас». Минимум планирования, максимум экспериментов. Код может быть «костыльным», главное — быстро получить работающий прототип.</td>
+                                        <td class="p-4 text-gray-400">Процесс, качество и структура. Внимание к архитектуре, тестированию, безопасности и поддерживаемости кода. Каждая итерация включает: описание требований → генерацию кода AI → ревью и доработку.</td>
                                     </tr>
                                     <tr class="border-b border-dark-border/50">
                                         <td class="p-4 text-gray-300 font-medium">Работа с ИИ</td>
-                                        <td class="p-4 text-gray-400">Диалог «на равных», больше импровизации.</td>
-                                        <td class="p-4 text-gray-400">Чёткое управление, постановка задач, строгий приём работы.</td>
+                                        <td class="p-4 text-gray-400">Диалог «на равных» с AI, много импровизации. Разработчик описывает идеи естественным языком, AI генерирует код, разработчик быстро проверяет и двигается дальше. Минимум документации и спецификаций</td>
+                                        <td class="p-4 text-gray-400">Структурированный подход: чёткие спецификации, тесты, контракты. AI используется для автоматизации рутинных задач, генерации шаблонного кода, рефакторинга и поиска багов. Каждое решение AI проходит валидацию.</td>
                                     </tr>
                                     <tr>
                                         <td class="p-4 text-gray-300 font-medium">Идеальная сфера</td>
-                                        <td class="p-4 text-gray-400">Исследование, хакатоны, личные проекты.</td>
-                                        <td class="p-4 text-gray-400">Профессиональная разработка, командные проекты, продакшн.</td>
+                                        <td class="p-4 text-gray-400">Личные проекты, хакатоны, MVP для проверки гипотез, обучение, простые одностраничные приложения. Ситуации с ограниченными ресурсами, где скорость важнее качества.</td>
+                                        <td class="p-4 text-gray-400">Профессиональная и командная разработка, корпоративные системы, масштабируемые веб-приложения, проекты с требованиями к безопасности и надёжности. Всё, что должно работать в продакшене долго и стабильно</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -831,7 +857,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 border-t border-dark-border">
+    <footer class="py-8 border-t border-dark-border relative z-10">
         <div class="container mx-auto px-6 text-center">
             <div class="mb-4">
                 <a href="https://github.com/Z01coder" class="text-2xl mx-2 hover:text-aurora-green transition"><i class="fab fa-github"></i></a>
@@ -846,8 +872,74 @@
             </p>
         </div>
     </footer>
+    </main>
 
     <script>
+        // Matrix Rain background
+        (function () {
+            const canvas = document.getElementById("matrix-canvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                columns = canvas.width / fontSize;
+                drops.length = 0;
+                for (let i = 0; i < columns; i++) drops[i] = Math.random() * canvas.height;
+            }
+            const letters = `
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789
+!"№;%:?*()_-+=/\\|[]{}<>.,~\`@#$%^&
+ぁあぃいぅうぇえぉお
+かがきぎくぐけげこご
+さざしじすずせぜそぞ
+ただちぢっつづてでとど
+なにぬねの
+はばぱひびぴふぶぷへべぺほぼぽ
+まみむめも
+ゃやゅゆょよ
+らりるれろ
+わをん
+ァアィイゥウェエォオ
+カガキギクグケゲコゴ
+サザシジスズセゼソゾ
+タダチヂッツヅテデトド
+ナニヌネノ
+ハバパヒビピフブプヘベペホボポ
+マミムメモ
+ャヤュユョヨ
+ラリルレロ
+ワヲン
+ー・「」『』【】〜
+`;
+            const bright = "#00ffcc";
+            const mid = "#00aa88";
+            const dark = "#004d40";
+            const colors = [bright, mid, dark];
+            const fontSize = 12;
+            let columns = Math.floor(canvas.width / fontSize);
+            const drops = [];
+            resize();
+            window.addEventListener("resize", resize);
+            function draw() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.imageSmoothingEnabled = false;
+                ctx.font = fontSize + "px monospace";
+                const lettersTrim = letters.replace(/\s/g, "");
+                for (let i = 0; i < drops.length; i++) {
+                    const text = lettersTrim[Math.floor(Math.random() * lettersTrim.length)];
+                    ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+                    ctx.fillText(text, i * fontSize, drops[i]);
+                    if (drops[i] > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i] += fontSize * 1.2;
+                }
+            }
+            setInterval(draw, 33);
+        })();
+
         // Mobile menu toggle
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
@@ -897,10 +989,18 @@
             });
         });
 
-        // Microblog: G-man avoids the cursor by moving right off-screen
+        // Microblog: G-man at viewport edge, visible only when blog is in view; avoids cursor
         (() => {
             const gman = document.getElementById('microblogGman');
-            if (!gman) return;
+            const blogSection = document.getElementById('blog');
+            if (!gman || !blogSection) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    gman.classList.toggle('microblog-gman-visible', e.isIntersecting);
+                });
+            }, { rootMargin: '0px', threshold: 0.1 });
+            observer.observe(blogSection);
 
             const AVOID_RADIUS_PX = 180;
             const BASE_PADDING_PX = 18;

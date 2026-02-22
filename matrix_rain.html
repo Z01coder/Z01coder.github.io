@@ -39,7 +39,7 @@ const bright = "#00ffcc";
 const mid = "#00aa88";
 const dark = "#004d40";
 const colors = [bright, mid, dark];
-const fontSize = 16;
+const fontSize = 12;
 const columns = canvas.width / fontSize;
 
 const drops = [];
@@ -53,7 +53,7 @@ function draw() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.imageSmoothingEnabled = false;
 
-  ctx.font = "16px 'DotGothic16'";
+  ctx.font = "12px 'DotGothic16'";
   ctx.font = fontSize + "px monospace";
 
   for (let i = 0; i < drops.length; i++) {
@@ -64,7 +64,7 @@ function draw() {
     if (drops[i] > canvas.height && Math.random() > 0.975)
       drops[i] = 0;
 
-    drops[i] += fontSize;
+    drops[i] += fontSize * 1.2;
   }
 }
 

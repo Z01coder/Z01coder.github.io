@@ -100,10 +100,11 @@ h1 .mark{background:var(--grad);-webkit-background-clip:text;background-clip:tex
 .stats{display:grid;grid-template-columns:repeat(4,auto);gap:clamp(16px,3vw,36px);
   border-top:1px solid var(--border);padding-top:20px;width:fit-content}
 .stat b{
-  display:block;font-family:var(--font-head);font-weight:800;color:var(--green);
-  font-size:clamp(1.4rem,2.6vw,1.9rem);white-space:nowrap
+  display:block;font-family:var(--font-body);font-weight:800;color:var(--green);
+  font-size:clamp(1.5rem,2.8vw,2.05rem);white-space:nowrap;font-variant-numeric:tabular-nums
 }
-.stat span{font-size:.87rem;color:var(--muted);white-space:nowrap}
+.stat b .sep{font-style:normal;font-weight:700;font-size:.82em;color:rgba(184,255,44,.42)}
+.stat span{font-size:.92rem;color:var(--text);white-space:nowrap}
 
 /* Терминал */
 .term{
@@ -387,9 +388,9 @@ footer{border-top:1px solid var(--border);padding:clamp(56px,8vw,90px) 0 34px;po
         <a class="btn btn-ghost" href="#cases">Смотреть кейсы</a>
       </div>
       <div class="stats">
-        <div class="stat"><b><span data-count="3">0</span>–<span data-count="4">0</span> дня</b><span>срок лендинга</span></div>
-        <div class="stat"><b>от <span data-count="13500">0</span> ₽</b><span>старт прайса</span></div>
-        <div class="stat"><b><span data-count="20">0</span>+</b><span>проектов на GitHub</span></div>
+        <div class="stat"><b><span data-count="3">0</span><i class="sep">–</i><span data-count="4">0</span> дня</b><span>срок лендинга</span></div>
+        <div class="stat"><b><i class="sep">от</i> <span data-count="13500">0</span> ₽</b><span>старт прайса</span></div>
+        <div class="stat"><b><span data-count="20">0</span><i class="sep">+</i></b><span>проектов на GitHub</span></div>
         <div class="stat"><b><span data-count="2">0</span> круга</b><span>правок в работе</span></div>
       </div>
     </div>
@@ -830,6 +831,13 @@ footer{border-top:1px solid var(--border);padding:clamp(56px,8vw,90px) 0 34px;po
   function run(el) {
     const target = +el.dataset.count;
     if (reduced) { el.textContent = fmt(target); return; }
+    // резервируем финальную ширину, чтобы сетка не дрожала во время анимации
+    el.textContent = fmt(target);
+    const w = Math.ceil(el.getBoundingClientRect().width);
+    el.style.display = "inline-block";
+    el.style.minWidth = w + "px";
+    el.style.textAlign = "left";
+    el.textContent = fmt(0);
     const t0 = performance.now(), dur = 1300;
     (function frame(now) {
       const k = Math.min((now - t0) / dur, 1);
